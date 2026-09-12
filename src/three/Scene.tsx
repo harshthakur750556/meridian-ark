@@ -54,11 +54,17 @@ export function Scene() {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      gl={{ antialias: true, powerPreference: 'high-performance' }}
+      gl={{
+        antialias: true,
+        powerPreference: 'high-performance',
+        toneMapping: THREE.ACESFilmicToneMapping,
+        toneMappingExposure: 1.15,
+      }}
       camera={{ position: [60, 26, 62], fov: 45, near: 0.1, far: 2500 }}
       onPointerMissed={() => select(null)}
     >
       <color attach="background" args={['#02030a']} />
+      <fog attach="fog" args={['#02030a', 180, 520]} />
       <Suspense fallback={null}>
         <Lights />
         <Space />

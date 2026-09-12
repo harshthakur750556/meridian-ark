@@ -473,8 +473,16 @@ function NavStrobes() {
   const b = useRef<THREE.Mesh>(null);
   useFrame(() => {
     const t = anim.time % 1.6;
-    if (a.current) a.current.visible = t < 0.08 || (t > 0.2 && t < 0.28);
-    if (b.current) b.current.visible = t > 0.8 && t < 0.9;
+    const aOn = t < 0.08 || (t > 0.2 && t < 0.28);
+    const bOn = t > 0.8 && t < 0.9;
+    if (a.current) {
+      a.current.visible = aOn;
+      (a.current.material as THREE.MeshStandardMaterial).emissiveIntensity = aOn ? 5.5 : 0.4;
+    }
+    if (b.current) {
+      b.current.visible = bOn;
+      (b.current.material as THREE.MeshStandardMaterial).emissiveIntensity = bOn ? 5.5 : 0.4;
+    }
   });
   return (
     <group>

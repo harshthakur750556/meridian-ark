@@ -21,7 +21,7 @@ export function CameraRig() {
     flying.current = 1;
   }, [focusVersion, focus]);
 
-  useFrame((_, dt) => {
+  useFrame((state, dt) => {
     const c = controls.current;
     if (!c) return;
     if (flying.current > 0) {
@@ -34,10 +34,11 @@ export function CameraRig() {
     }
     // warp shake
     if (anim.warp > 0.05) {
-      const s = anim.warp * 0.06;
-      camera.position.x += (Math.random() - 0.5) * s;
-      camera.position.y += (Math.random() - 0.5) * s;
-      camera.position.z += (Math.random() - 0.5) * s;
+      const s = anim.warp * 0.045;
+      const t = state.clock.elapsedTime * 22;
+      camera.position.x += Math.sin(t * 1.7) * s * dt;
+      camera.position.y += Math.sin(t * 2.3 + 1.5) * s * dt;
+      camera.position.z += Math.cos(t * 1.9 + 0.7) * s * dt;
     }
     c.update();
   });
